@@ -4,7 +4,7 @@ module.exports = [
     {
         mode: 'development',
         entry: {
-            app: ['./cmd/js/wasm_exec.js', './cmd/js/go_run.js'],
+            app: ['./src/app.js', './cmd/js/wasm_exec.js', './cmd/js/go_run.js'],
         },
         module: {
             rules: [
@@ -12,7 +12,18 @@ module.exports = [
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
-                        loader: "babel-loader"
+                        loader: "babel-loader",
+                        options: {
+                            presets:[
+                                ['@babel/preset-react'],
+                                ['@babel/preset-env',
+                                    {
+                                        useBuiltIns: "usage",
+                                        corejs: "3.2.1"
+                                    },
+                                ]
+                            ],
+                        }
                     }
                 }
             ]
@@ -25,7 +36,7 @@ module.exports = [
     {
         mode: 'production',
         entry: {
-            app: ['./cmd/js/wasm_exec.js', './cmd/js/go_run.js'],
+            app: ['./src/app.js', './cmd/js/wasm_exec.js', './cmd/js/go_run.js'],
         },
         module: {
             rules: [
@@ -33,10 +44,21 @@ module.exports = [
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
-                        loader: "babel-loader"
+                        loader: "babel-loader",
+                        options: {
+                            presets:[
+                                ['@babel/preset-react'],
+                                ['@babel/preset-env',
+                                    {
+                                        useBuiltIns: "usage",
+                                        corejs: "3.2.1"
+                                    },
+                                ]
+                            ],
+                        }
                     }
                 }
-            ]
+            ],
         },
         output: {
             path: path.resolve(__dirname, 'dist/deploy/js'),
