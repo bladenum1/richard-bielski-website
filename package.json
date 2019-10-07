@@ -1,0 +1,67 @@
+{
+  "name": "richarad-bielski-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "npm-watch": "^0.6.0",
+    "serve": "^11.2.0",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.6.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.2.1"
+  },
+  "watch": {
+    "build_go": {
+      "patterns": [
+        "cmd",
+        "test"
+      ],
+      "extensions": "go",
+      "quiet": false
+    },
+    "build_js": {
+      "patterns": [
+        "cmd",
+        "test"
+      ],
+      "extensions": "js",
+      "quiet": false
+    },
+    "build_html": {
+      "patterns": [
+        "cmd",
+        "test"
+      ],
+      "extensions": "html",
+      "quiet": false
+    },
+    "serve": {
+      "patterns": [
+        "."
+      ],
+      "extensions": ".json",
+      "quiet": false
+    }
+  },
+  "scripts": {
+    "init": "mkdir dist && mkdir dist/dev && mkdir dist/dev/js && mkdir dist/dev/wasm && mkdir dist/deploy && mkdir dist/deploy/js && mkdir dist/deploy/wasm",
+    "build_go": "tinygo build -o dist/dev/wasm/wasm.wasm -target wasm ./cmd/richard-bielski-website",
+    "build_js": "npx webpack --mode development",
+    "build_html": "cp cmd/html/*.html dist/dev",
+    "build_go_deploy": "tinygo build -o dist/deploy/wasm/wasm.wasm -target wasm ./cmd/richard-bielski-website",
+    "build_js_deploy": "npx webpack --mode production",
+    "build_html_deploy": "cp cmd/html/*.html dist/deploy",
+    "serve": "cd dist/dev && npx serve",
+    "watch": "npm-watch",
+    "deploy": "npm run build_go_deploy && npm run build_js_deploy && npm run build_html_deploy"
+  }
+}
