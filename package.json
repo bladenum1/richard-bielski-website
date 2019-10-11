@@ -69,7 +69,7 @@
     "serve": "cd dist/dev && npx serve",
     "watch": "npm-watch",
     "build_prod": "npm run build_go_deploy && npm run build_js_deploy && npm run build_html_deploy",
-    "push": "aws s3 sync dist/deploy s3://$(aws configure get application)-$(aws configure get env)-$(aws configure get color)-$(aws configure get region) ",
+    "push": "aws s3 sync dist/deploy s3://$(aws configure get application)-$(aws configure get env)-$(aws configure get color)-$(aws configure get region) --cache-control maxage=8600",
     "invalidate": "aws cloudfront create-invalidation --distribution-id EISUQTL19553N --path \"/*\"",
     "build_push_invalidate": "npm run build_prod && npm run push && npm run invalidate"
   }
